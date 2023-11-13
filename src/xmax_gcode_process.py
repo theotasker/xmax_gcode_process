@@ -19,11 +19,15 @@ from progress.bar import Bar
 # change cwd to the directory of this file
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
+TEMP_DIR = '../temp'
+TEMP_FILENAME = os.path.join(TEMP_DIR, 'temp.gcode')
 
-LOG_FILE = datetime.datetime.now().strftime('%Y-%m-%d.log')
-LOG_PATH = os.path.join('../logs', LOG_FILE)
-if not os.path.exists('../logs'):
-    os.makedirs('../logs')
+LOG_DIR = '../logs'
+LOG_PATH = os.path.join(LOG_DIR, datetime.datetime.now().strftime('%Y-%m-%d.log'))
+
+for path in [TEMP_DIR, LOG_DIR]:
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s',
                         handlers=[
@@ -95,11 +99,10 @@ def main():
     supported_commands = read_file_to_list('../xmax_supported_commands.gcode', just_gcode=True)
     logging.debug(f'Read {len(supported_commands)} supported commands from xmax_supported_commands.gcode')
 
-    temp_filename = '../temp/temp.tmp'
-    removed_count = remove_unsupported_commands(gcode_file, temp_filename, supported_commands)
-    logging.debug(f'Processed {gcode_file} to {temp_filename}')
+    removed_count = remove_unsupported_commands(gcode_file, TEMP_FILENAME, supported_commands)
+    logging.debug(f'Processed {gcode_file} to {TEMP_FILENAME}')
     
-    shutil.move(temp_filename, gcode_file)
+    shutil.move(TEMP_FILENAME, gcode_file)
     logging.info(f'Processed {gcode_file}, removed {removed_count} unsupported commands')
 
     return
