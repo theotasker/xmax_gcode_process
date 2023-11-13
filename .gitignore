@@ -129,7 +129,7 @@ env.bak/
 venv.bak/
 
 # Temp files
-.temp/*
+.temp/*.*
 
 # Spyder project settings
 .spyderproject
