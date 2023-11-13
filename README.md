@@ -6,3 +6,7 @@ In PrusaSlicer, with advanced settings on, under "Output options/Post-processing
 "<path/to/python/exe>" "<path/to/xmax_gcode_process>/src/xmax_gcode_process.py";
 
 After pressing "Export Gcode" in the slicer, a Python window should show up denoting the current progress. Currently takes about 60 seconds for 1,000,000 lines of gcode
+
+Reads the "xmax_supported_commands.gcode" file in root for reference
+
+Requires "progress" to be pip installed for Python
